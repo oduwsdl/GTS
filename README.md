@@ -20,9 +20,15 @@ $ python gts.py example.com
 <a href="https://www.python.org/downloads/">Python 3.X</a>
 
 The following Python Libraries:
+
 boilerpy3
+
 googletrans
+
 nltk
+
 os
+
 sys
+
 requests
