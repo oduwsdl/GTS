@@ -1,0 +1,6 @@
+boilerpy3
+googletrans
+nltk
+os
+sys
+requests
