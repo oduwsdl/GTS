@@ -12,3 +12,7 @@ $ python gts.py URL
 
 # Example:
 $ python gts.py example.com
+
+# Requirements:
+
+<a href="https://www.oracle.com/Java/technologies/Javase-jre8-downloads.html">JRE 8</a>
