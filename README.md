@@ -16,3 +16,13 @@ $ python gts.py example.com
 # Requirements:
 
 <a href="https://www.oracle.com/Java/technologies/Javase-jre8-downloads.html">JRE 8</a>
+
+<a href="https://www.python.org/downloads/">Python 3.X</a>
+
+The following Python Libraries:
+boilerpy3
+googletrans
+nltk
+os
+sys
+requests
