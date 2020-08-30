@@ -8,7 +8,7 @@ URL for an Arabic web page
 Named Entities (Location, Person, Organization) in Arabic and English.
 
 # Usage:
-$ python gts.py <url>
+$ python gts.py URL
 
 # Example:
 $ python gts.py example.com
