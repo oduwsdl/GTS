@@ -4,7 +4,7 @@ Arabic Named Entity Recognition and Classification (NERC) from live Arabic web p
 # Input: 
 URL for an Arabic web page
 
-#Output:
+# Output:
 Named Entities (Location, Person, Organization) in Arabic and English.
 
 # Usage:
