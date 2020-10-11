@@ -1,5 +1,5 @@
 # GTS
-Arabic Named Entity Recognition and Classification (NERC) from live Arabic web pages using Google Translate and Stanford NERC.
+Arabic Named Entity Recognition and Classification (NERC) system from live Arabic web pages using Google Translate and Stanford NERC.
 
 # Input: 
 URL for an Arabic web page
