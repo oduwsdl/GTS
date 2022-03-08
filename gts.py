@@ -1,79 +1,57 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Aug 19 15:38:06 2020
-
-@author: Hussam Hallak
-"""
-
-
 from boilerpy3 import extractors
 from googletrans import Translator
-from nltk.tag import StanfordNERTagger
-from nltk.tokenize import word_tokenize
-import os
+import stanza
+import json
 import sys
-import requests
-
-if len(sys.argv) != 2:
-    print ("Usage: Python gts.py <url>")
-    print ("e.g: python gts.py http://example.com")
-    exit()
-else:
-    url = sys.argv[1]
-    request = requests.get(url)
-    if request.status_code != 200:
-        print ("This URL did not return a status code of 200. Try a different URL.")
-        print ("Status Code:" + str(request.status_code))
-        exit()
-
-def printArray(array, array_name):
-    print (array_name + ":" + "\n" + "--------------")
-    for item in array:
-        print (item)
-        ar_item = translator.translate(item, src='en', dest='ar')
-        print (ar_item.text)
-
-java_path = "C:\Program Files (x86)\Java\jre1.8.0_251/java.exe"
-os.environ['JAVAHOME'] = java_path
-
-st = StanfordNERTagger(r'stanford-ner-4.0.0/stanford-ner-4.0.0/classifiers/english.all.3class.distsim.crf.ser.gz',
-					   r'stanford-ner-4.0.0/stanford-ner-4.0.0/stanford-ner.jar',
-					   encoding='utf-8')
-
-extractor = extractors.ArticleExtractor()
-
-# From a URL
-content = extractor.get_content_from_url(url)
-
-#print (content)
 
 translator = Translator()
+extractor = extractors.ArticleExtractor()
 
-output = translator.translate(content)
+def extract(url):
 
-translated_content = output.text
+    try:
+        content = extractor.get_content_from_url(url)
+    except:
+        print("This URL did not return a status code of 200. Try a different URL.")
+        return
+    output = translator.translate(content)
 
-#print (translated_content)
+    translated_content = output.text
 
-tokenized_text = word_tokenize(translated_content)
+    nes = get_nes(translated_content)
+    
+    entities = {}
+    entities["persons"] = []
+    entities["locations"] = []
+    entities["organizations"] = []
 
-classified_text = st.tag(tokenized_text)
+    for ne in nes:
+        ne_dict = ne.to_dict()
+        if ne_dict["type"] == "PERSON":
+            entities["persons"].append(ne_dict["text"])
+        if ne_dict["type"] == "GPE":
+            entities["locations"].append(ne_dict["text"])
+        if ne_dict["type"] == "ORG":
+            entities["organizations"].append(ne_dict["text"])
+            
+    return entities    
+            
 
-#print(type(classified_text))
+def get_nes(input_text):
+    stanza.download('en')
+    nlp = stanza.Pipeline('en')
+    output = nlp(input_text)
+    return output.entities
 
-locations = []
-persons = []
-organizations = []
-
-for word in classified_text:
-    if word[1] == "LOCATION":
-        locations.append(word[0])
-    if word[1] == "PERSON":
-        persons.append(word[0])
-    if word[1] == "ORGANIZATION":
-        organizations.append(word[0])
-
-
-printArray(locations, "Locations")
-printArray(organizations, "Organizations")
-printArray(persons, "Persons")
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print ("Usage: Python gts.py <url>")
+        print ("e.g: python gts.py http://example.com")
+        sys.exit()
+    else:
+        entities = extract(sys.argv[1])
+        if not entities:
+            sys.exit()
+        json_object = json.dumps(entities, indent = 4) 
+        print(json_object)
