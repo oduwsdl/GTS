@@ -26,7 +26,7 @@ The following Python Libraries:
 
 boilerpy3
 
-googletrans
+googletrans==3.1.0a0
 
 nltk
 
