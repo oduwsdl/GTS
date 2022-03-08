@@ -13,6 +13,9 @@ $ python gts.py URL
 # Example:
 $ python gts.py example.com
 
+# output:
+![image](https://user-images.githubusercontent.com/11039233/157193571-648e54ae-3c7f-41e2-ab44-965f70f94b4e.png)
+
 # Requirements:
 
 <a href="https://www.oracle.com/Java/technologies/Javase-jre8-downloads.html">JRE 8</a>
